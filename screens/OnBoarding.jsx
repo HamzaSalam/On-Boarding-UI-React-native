@@ -9,14 +9,16 @@ import React from 'react';
 import Lottie from 'lottie-react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import {useNavigation} from '@react-navigation/native';
+import {setItem} from '../utils/asyncStorage';
 
 const {width, height} = Dimensions.get('window');
 
 const OnBoarding = () => {
   const navigation = useNavigation();
 
-  const handleDone = () => {
+  const handleDone = async () => {
     navigation.navigate('Home');
+    await setItem('onboarding', '1');
   };
 
   const doneButton = ({...props}) => {
@@ -32,6 +34,7 @@ const OnBoarding = () => {
         onDone={handleDone}
         onSkip={handleDone}
         DoneButtonComponent={doneButton}
+        bottomBarHighlight={false}
         containerStyles={{paddingHorizontal: 15}}
         pages={[
           {
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
   lottie: {width: width * 0.9, height: width},
   doneButton: {
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderTopLeftRadius: '100%',
     borderBottomLeftRadius: '100%',
   },
